@@ -242,12 +242,22 @@ header.navbar {
   margin-top: 60px;
 }
 .hero-stat-box {
-  flex: 0 0 239.33px;
-  width: 239.33px;
+  /*
+   * Equal thirds that always add up to the row's real width, rather than a
+   * fixed 239.33px each (3 of those + gaps is wider than .hero-text-col at
+   * every desktop container breakpoint, which is what was forcing a wrap).
+   */
+  flex: 1 1 0;
+  min-width: 0;
   border: 1px solid var(--bs-border-color);
   border-radius: 12px;
   padding: 16px 24px;
   background: rgba(255, 255, 255, 0.02);
+}
+@media (min-width: 992px) {
+  .hero-stats {
+    flex-wrap: nowrap;
+  }
 }
 @media (max-width: 991.98px) {
   .hero-stats {
@@ -276,13 +286,13 @@ header.navbar {
 }
 @media (min-width: 992px) {
   .hero-text-col {
-    flex: 0 0 48%;
-    max-width: 48%;
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 }
 .hero-media {
   position: absolute;
-  inset: 0 0 0 52%;
+  inset: 0 0 0 54%;
   z-index: 0;
   display: flex;
   align-items: center;
@@ -542,6 +552,13 @@ header.navbar {
   width: 100%;
   text-align: center;
 }
+@media (min-width: 768px) {
+  .faq-card .btn {
+    width: auto;
+    text-align: left;
+    align-self: flex-start;
+  }
+}
 .faq-card:hover {
   background: rgba(255, 255, 255, 0.03);
   border-color: var(--color-primary);
@@ -580,17 +597,13 @@ header.navbar {
   scroll-snap-align: start;
 }
 @media (min-width: 768px) {
-  .es-slider-slide--3up {
+  .es-slider-slide--3up,
+  .es-slider-slide--3up-direct {
     flex: 0 0 calc(50% - (var(--es-slider-gap) / 2));
   }
 }
 @media (min-width: 992px) {
   .es-slider-slide--3up,
-  .es-slider-slide--3up-direct {
-    flex: 0 0 calc(33.3333% - (var(--es-slider-gap) * 2 / 3));
-  }
-}
-@media (min-width: 768px) and (max-width: 991.98px) {
   .es-slider-slide--3up-direct {
     flex: 0 0 calc(33.3333% - (var(--es-slider-gap) * 2 / 3));
   }
@@ -608,6 +621,24 @@ header.navbar {
   display: flex;
   align-items: center;
   gap: 24px;
+}
+/*
+ * Desktop (lg+, matching the "View All" button's own d-lg-none/d-none
+ * d-lg-inline-block breakpoint so the two states line up exactly): counter
+ * on the left, arrows grouped together on the far right — the pagination
+ * group is the only visible child of .es-slider-nav at this width, so give
+ * it the full row before reordering, or margin-left:auto has no room to push.
+ */
+@media (min-width: 992px) {
+  .es-slider-pagination {
+    width: 100%;
+  }
+  .es-slider-counter {
+    order: -1;
+  }
+  .es-slider-arrow[data-es-slider-prev] {
+    margin-left: auto;
+  }
 }
 @media (max-width: 575.98px) {
   .es-slider-pagination {

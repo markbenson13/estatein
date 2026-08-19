@@ -62,7 +62,7 @@ while ( have_posts() ) :
 					<div class="modal-dialog modal-dialog-centered modal-xl">
 						<div class="modal-content bg-transparent border-0">
 							<button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="<?php esc_attr_e( 'Close', 'estatein' ); ?>"></button>
-							<img src="<?php echo esc_url( $all_images[0] ); ?>" alt="<?php the_title_attribute(); ?>" class="w-100 rounded" id="property-gallery-modal-img" />
+							<img src="<?php echo esc_url( $all_images[0] ); ?>" alt="<?php the_title_attribute(); ?>" class="w-100 rounded" id="property-gallery-modal-img" loading="lazy" />
 						</div>
 					</div>
 				</div>

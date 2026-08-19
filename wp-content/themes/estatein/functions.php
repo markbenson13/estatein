@@ -19,6 +19,7 @@ require ESTATEIN_DIR . '/inc/customizer.php';
 require ESTATEIN_DIR . '/inc/template-tags.php';
 require ESTATEIN_DIR . '/inc/forms.php';
 require ESTATEIN_DIR . '/inc/seo.php';
+require ESTATEIN_DIR . '/inc/performance.php';
 
 /**
  * Theme setup.
@@ -63,10 +64,15 @@ add_action( 'after_setup_theme', 'estatein_setup' );
  * Front-end scripts and styles.
  */
 function estatein_scripts() {
+	// Self-hosted rather than pulled from jsdelivr on every visit — one less
+	// external origin to resolve/connect/TLS-handshake to on the critical path.
 	wp_enqueue_style( 'estatein-fonts', 'https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap', array(), null );
-	wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3' );
-	wp_enqueue_style( 'estatein-style', get_stylesheet_uri(), array( 'bootstrap' ), ESTATEIN_VERSION );
-	wp_enqueue_script( 'bootstrap-bundle', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array(), '5.3.3', true );
+	wp_enqueue_style( 'bootstrap', ESTATEIN_URI . '/assets/vendor/bootstrap/bootstrap.min.css', array(), '5.3.3' );
+
+	$style_src = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? get_stylesheet_uri() : ESTATEIN_URI . '/style.min.css';
+	wp_enqueue_style( 'estatein-style', $style_src, array( 'bootstrap' ), ESTATEIN_VERSION );
+
+	wp_enqueue_script( 'bootstrap-bundle', ESTATEIN_URI . '/assets/vendor/bootstrap/bootstrap.bundle.min.js', array(), '5.3.3', true );
 	wp_enqueue_script( 'estatein-main', ESTATEIN_URI . '/assets/js/main.js', array( 'bootstrap-bundle' ), ESTATEIN_VERSION, true );
 
 	if ( is_singular( 'property' ) ) {

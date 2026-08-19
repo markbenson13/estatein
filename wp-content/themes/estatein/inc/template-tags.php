@@ -176,7 +176,7 @@ function estatein_slider_nav( $total, $view_all = null ) {
 		<?php endif; ?>
 		<div class="es-slider-pagination">
 			<button type="button" class="es-slider-arrow" data-es-slider-prev aria-label="<?php esc_attr_e( 'Previous', 'estatein' ); ?>">
-				<img class="slider-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/slider-arrow.png' ); ?>" alt="" />
+				<img class="slider-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/slider-arrow.png' ); ?>" alt="" loading="lazy" />
 			</button>
 			<span class="es-slider-counter">
 				<span data-es-slider-current>01</span>
@@ -184,7 +184,7 @@ function estatein_slider_nav( $total, $view_all = null ) {
 				<span data-es-slider-total><?php echo esc_html( sprintf( '%02d', $total ) ); ?></span>
 			</span>
 			<button type="button" class="es-slider-arrow" data-es-slider-next aria-label="<?php esc_attr_e( 'Next', 'estatein' ); ?>">
-				<img class="slider-active-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/slider-active-icon.png' ); ?>" alt="" />
+				<img class="slider-active-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/slider-active-icon.png' ); ?>" alt="" loading="lazy" />
 			</button>
 		</div>
 	</div>
@@ -198,7 +198,7 @@ function estatein_cta_band() {
 	?>
 	<section class="cta-band py-10">
 		<div class="container">
-			<div class="d-flex justify-content-between align-items-center flex-wrap gap-4">
+			<div class="d-flex justify-content-between align-items-center gap-4">
 				<div style="max-width:1140px;">
 					<h2 class="mb-3"><?php esc_html_e( 'Start Your Real Estate Journey Today', 'estatein' ); ?></h2>
 					<p class="text-body-secondary section-description mb-0"><?php esc_html_e( 'Your dream property is just a click away. Whether you\'re looking for a new home, a strategic investment, or expert real estate advice, Estatein is here to assist you every step of the way. Take the first step towards your real estate goals and explore our available properties or get in touch with our team for personalized assistance.', 'estatein' ); ?></p>

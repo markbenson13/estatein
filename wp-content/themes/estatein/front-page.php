@@ -52,7 +52,7 @@ $feature_items = array(
 				</g>
 			</svg>
 		</div>
-		<img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Featured building', 'estatein'); ?>" class="hero-image" />
+		<img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Featured building', 'estatein'); ?>" class="hero-image" loading="eager" fetchpriority="high" />
 	</div>
 	<div class="container py-5">
 		<div class="row align-items-center gy-5">
@@ -91,10 +91,10 @@ $feature_items = array(
 				<div class="col">
 					<a href="<?php echo esc_url($item['link']); ?>" class="feature-item d-flex flex-column align-items-center text-center gap-4 h-100 text-decoration-none position-relative">
 						<span class="feature-arrow" aria-hidden="true">
-							<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/link-icon.png'); ?>" alt="" />
+							<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/link-icon.png'); ?>" alt="" loading="lazy" />
 						</span>
 						<span class="feature-icon">
-							<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/' . $item['icon']); ?>" alt="" />
+							<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/' . $item['icon']); ?>" alt="" loading="lazy" />
 						</span>
 						<span class="feature-label fw-semibold text-body"><?php echo esc_html($item['label']); ?></span>
 					</a>
@@ -118,9 +118,9 @@ if ($featured_query->have_posts()) :
 ?>
 	<section class="section" id="properties">
 		<div class="container">
-			<div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-5">
+			<div class="d-flex justify-content-between align-items-end gap-3 mb-5">
 				<div style="max-width:1135px;">
-					<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" />
+					<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" loading="lazy" />
 					<h2 class="mb-2"><?php esc_html_e('Featured Properties', 'estatein'); ?></h2>
 					<p class="text-body-secondary section-description mb-0"><?php esc_html_e('Explore our handpicked selection of featured properties. Each listing offers a glimpse into exceptional homes and investments available through Estatein.  Click "View Details" for more information.', 'estatein'); ?></p>
 				</div>
@@ -168,12 +168,13 @@ $testimonials_query = new WP_Query(
 <?php if ( $testimonials_query->have_posts() ) : ?>
 <section class="section" id="testimonials">
 	<div class="container">
-		<div class="testimonials-header">
+		<div class="d-flex justify-content-between align-items-end gap-3 testimonials-header">
 			<div style="max-width:1135px;">
-				<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" />
+				<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" loading="lazy" />
 				<h2 class="mb-2"><?php esc_html_e('What Our Clients Say', 'estatein'); ?></h2>
 				<p class="text-body-secondary section-description mb-0"><?php esc_html_e('Read the success stories and heartfelt testimonials from our valued clients. Discover why they chose Estatein for their real estate needs.', 'estatein'); ?></p>
 			</div>
+			<a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>" class="btn btn-outline-light flex-shrink-0 d-none d-lg-inline-block"><?php esc_html_e('View All Testimonials', 'estatein'); ?></a>
 		</div>
 		<div class="es-slider testimonials-slider" data-es-slider>
 			<div class="es-slider-track" data-es-slider-track>
@@ -187,7 +188,7 @@ $testimonials_query = new WP_Query(
 						<div class="card testimonial-card h-100">
 							<div class="testimonial-stars d-flex gap-2">
 								<?php for ($i = 0; $i < 5; $i++) : ?>
-									<img class="testimonial-star" src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/star-icon.png'); ?>" alt="" />
+									<img class="testimonial-star" src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/star-icon.png'); ?>" alt="" loading="lazy" />
 								<?php endfor; ?>
 							</div>
 							<h3 class="testimonial-title"><?php the_title(); ?></h3>
@@ -216,6 +217,7 @@ $testimonials_query = new WP_Query(
 				array(
 					'url'   => get_post_type_archive_link( 'testimonial' ),
 					'label' => __( 'View All Testimonials', 'estatein' ),
+					'class' => 'd-lg-none',
 				)
 			);
 			?>
@@ -237,12 +239,13 @@ $faq_query = new WP_Query(
 <?php if ( $faq_query->have_posts() ) : ?>
 <section class="section" id="faq">
 	<div class="container">
-		<div class="faq-header">
+		<div class="d-flex justify-content-between align-items-end gap-3 faq-header">
 			<div style="max-width:1135px;">
-				<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" />
+				<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" loading="lazy" />
 				<h2 class="mb-2"><?php esc_html_e('Frequently Asked Questions', 'estatein'); ?></h2>
 				<p class="text-body-secondary section-description mb-0"><?php esc_html_e("Find answers to common questions about Estatein's services, property listings, and the real estate process. We're here to provide clarity and assist you every step of the way.", 'estatein'); ?></p>
 			</div>
+			<a href="<?php echo esc_url(get_post_type_archive_link('faq')); ?>" class="btn btn-outline-light flex-shrink-0 d-none d-lg-inline-block"><?php esc_html_e("View All FAQ's", 'estatein'); ?></a>
 		</div>
 		<div class="es-slider faq-slider" data-es-slider>
 			<div class="es-slider-track" data-es-slider-track>
@@ -268,6 +271,7 @@ $faq_query = new WP_Query(
 				array(
 					'url'   => get_post_type_archive_link( 'faq' ),
 					'label' => __( "View All FAQ's", 'estatein' ),
+					'class' => 'd-lg-none',
 				)
 			);
 			?>

@@ -33,13 +33,13 @@ $type_name = ( $type_term && ! is_wp_error( $type_term ) ) ? $type_term[0]->name
 		</p>
 		<div class="d-flex flex-wrap gap-2 mb-3">
 			<?php if ( '' !== $meta['bedrooms'] ) : ?>
-				<span class="property-pill"><img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/bed-icon.png' ); ?>" alt="" /> <?php echo esc_html( $meta['bedrooms'] ); ?>-<?php esc_html_e( 'Bedroom', 'estatein' ); ?></span>
+				<span class="property-pill"><img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/bed-icon.png' ); ?>" alt="" loading="lazy" /> <?php echo esc_html( $meta['bedrooms'] ); ?>-<?php esc_html_e( 'Bedroom', 'estatein' ); ?></span>
 			<?php endif; ?>
 			<?php if ( '' !== $meta['bathrooms'] ) : ?>
-				<span class="property-pill"><img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/bath-icon.png' ); ?>" alt="" /> <?php echo esc_html( $meta['bathrooms'] ); ?>-<?php esc_html_e( 'Bathroom', 'estatein' ); ?></span>
+				<span class="property-pill"><img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/bath-icon.png' ); ?>" alt="" loading="lazy" /> <?php echo esc_html( $meta['bathrooms'] ); ?>-<?php esc_html_e( 'Bathroom', 'estatein' ); ?></span>
 			<?php endif; ?>
 			<?php if ( $type_name ) : ?>
-				<span class="property-pill"><img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/villa-icon.png' ); ?>" alt="" /> <?php echo esc_html( $type_name ); ?></span>
+				<span class="property-pill"><img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/villa-icon.png' ); ?>" alt="" loading="lazy" /> <?php echo esc_html( $type_name ); ?></span>
 			<?php endif; ?>
 		</div>
 		<hr class="text-body-secondary opacity-25 mt-0 mb-3" />

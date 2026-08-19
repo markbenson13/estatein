@@ -67,7 +67,7 @@ $estatein_footer_columns = array(
 							the_custom_logo();
 						} else {
 							?>
-							<img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/estatein-logo.png' ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="site-logo-img" />
+							<img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/estatein-logo.png' ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="site-logo-img" loading="lazy" />
 							<?php
 						}
 						?>
@@ -86,11 +86,11 @@ $estatein_footer_columns = array(
 								<input type="text" id="newsletter-website" name="website" tabindex="-1" autocomplete="off" />
 							</div>
 							<div class="newsletter-input-group d-flex align-items-center">
-								<img class="newsletter-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/email-icon.png' ); ?>" alt="" aria-hidden="true" />
+								<img class="newsletter-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/email-icon.png' ); ?>" alt="" aria-hidden="true" loading="lazy" />
 								<label for="newsletter-email" class="visually-hidden"><?php esc_html_e( 'Email address', 'estatein' ); ?></label>
 								<input type="email" id="newsletter-email" name="email" class="form-control border-0" placeholder="<?php esc_attr_e( 'Enter Your Email', 'estatein' ); ?>" required />
 								<button type="submit" class="newsletter-submit" aria-label="<?php esc_attr_e( 'Subscribe', 'estatein' ); ?>">
-									<img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/send-icon.png' ); ?>" alt="" />
+									<img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/send-icon.png' ); ?>" alt="" loading="lazy" />
 								</button>
 							</div>
 						</form>
