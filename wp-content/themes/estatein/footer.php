@@ -56,6 +56,7 @@ $estatein_footer_columns = array(
 	),
 );
 ?>
+<?php estatein_cta_band(); ?>
 	<footer class="site-footer border-top border-secondary-subtle">
 		<div class="container footer-main">
 			<div class="row gy-4 footer-columns-row">
@@ -97,7 +98,7 @@ $estatein_footer_columns = array(
 				</div>
 
 				<?php foreach ( $estatein_footer_columns as $column ) : ?>
-					<div class="col-6 col-lg">
+					<div class="col-6 col-lg footer-col">
 						<h4 class="footer-col-title"><?php echo esc_html( $column['title'] ); ?></h4>
 						<ul class="list-unstyled d-flex flex-column footer-col-links">
 							<?php foreach ( $column['links'] as $label => $url ) : ?>
@@ -110,12 +111,12 @@ $estatein_footer_columns = array(
 		</div>
 
 		<div class="footer-copyright border-top border-secondary-subtle">
-			<div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+			<div class="container d-flex justify-content-between align-items-center flex-wrap gap-3 footer-copyright-inner">
 				<div class="d-flex align-items-center gap-3 footer-copyright-text">
 					<span><?php echo wp_kses_post( get_theme_mod( 'estatein_footer_text' ) ); ?></span>
 					<a class="text-decoration-none" href="<?php echo esc_url( home_url( '/terms-conditions/' ) ); ?>"><?php esc_html_e( 'Terms & Conditions', 'estatein' ); ?></a>
 				</div>
-				<div class="d-flex gap-2">
+				<div class="d-flex gap-2 footer-social-icons">
 					<?php
 					foreach ( array( 'facebook', 'linkedin', 'twitter', 'youtube' ) as $network ) {
 						$url = get_theme_mod( 'estatein_social_' . $network );

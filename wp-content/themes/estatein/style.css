@@ -71,11 +71,20 @@ h1,
 .h1 {
   font-size: 60px;
 }
+@media (max-width: 767.98px) {
+  h1,
+  .h1 {
+    font-size: 36px;
+  }
+}
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 body {
   overflow-x: hidden;
+  width: 100%;
 }
 @media (min-width: 1400px) {
   .container {
@@ -163,6 +172,15 @@ body {
 .announcement-bar.is-dismissed {
   display: none;
 }
+@media (max-width: 767.98px) {
+  .announcement-bar {
+    justify-content: flex-start;
+    padding-right: 48px;
+  }
+  .announcement-bar > div {
+    justify-content: flex-start;
+  }
+}
 .announcement-icon {
   color: var(--color-primary);
 }
@@ -179,6 +197,7 @@ header.navbar {
 }
 .navbar-nav {
   gap: 30px;
+  align-items: center;
 }
 .navbar-nav .nav-link {
   color: #ffffff;
@@ -188,7 +207,7 @@ header.navbar {
   background-color: #141414;
   border: 1px solid #262626;
   border-radius: 10px;
-  padding: 16px 24px;
+  padding: 14px 24px;
 }
 
 /* Hero */
@@ -230,6 +249,22 @@ header.navbar {
   padding: 16px 24px;
   background: rgba(255, 255, 255, 0.02);
 }
+@media (max-width: 991.98px) {
+  .hero-stats {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-stat-box {
+    flex: 0 0 calc(50% - 10px);
+    width: auto;
+    min-width: 0;
+    text-align: center;
+  }
+  .hero-stats .hero-stat-box:last-child {
+    flex: 100%;
+  }
+}
 .hero-stat-box strong {
   font-size: 40px;
   font-weight: 700;
@@ -270,13 +305,39 @@ header.navbar {
 }
 @media (max-width: 991.98px) {
   .hero {
+    display: block;
     min-height: 0;
   }
   .hero-media {
-    position: static;
+    position: relative;
     inset: auto;
-    height: 340px;
-    margin-bottom: 24px;
+    width: auto;
+    margin: 0 12px 24px;
+    height: 300px;
+    border-radius: 16px;
+  }
+  .hero-image {
+    border-radius: 16px;
+  }
+  .hero-badge {
+    top: auto;
+    bottom: -20px;
+    left: 12px;
+    right: auto;
+    transform: none;
+  }
+  .hero-badge svg {
+    width: 100px;
+    height: 100px;
+  }
+}
+@media (max-width: 575.98px) {
+  .hero-cta {
+    flex-direction: column;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    text-align: center;
   }
 }
 .hero-badge-spin {
@@ -403,7 +464,7 @@ header.navbar {
 
 /* Testimonials */
 .testimonial-card {
-  padding: 50px;
+  padding: 30px;
 }
 .testimonials-header {
   margin-bottom: 80px;
@@ -468,14 +529,18 @@ header.navbar {
   --es-slider-gap: 50px;
 }
 .faq-card {
-  gap: 30px;
+  gap: 20px;
   border: 1px solid var(--bs-border-color-translucent);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.015);
   transition:
     background 0.2s ease,
     border-color 0.2s ease;
-  padding: 50px;
+  padding: 30px;
+}
+.faq-card .btn {
+  width: 100%;
+  text-align: center;
 }
 .faq-card:hover {
   background: rgba(255, 255, 255, 0.03);
@@ -534,27 +599,32 @@ header.navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
   border-top: 1px solid #262626;
   padding-top: 20px;
+}
+.es-slider-pagination {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+@media (max-width: 575.98px) {
+  .es-slider-pagination {
+    width: 100%;
+    justify-content: center;
+  }
 }
 .es-slider-counter {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--color-surface);
-  border-radius: 0;
-  padding: 10px 20px 10px 0;
   font-weight: 600;
   color: var(--color-heading);
 }
 .es-slider-counter-sep {
   color: var(--color-text);
   font-weight: 400;
-}
-.es-slider-arrows {
-  display: flex;
-  gap: 12px;
 }
 .es-slider-arrow {
   width: 44px;
@@ -650,6 +720,31 @@ header.navbar {
   font-size: 18px;
   font-weight: 500;
 }
+@media (max-width: 991.98px) {
+  .footer-col {
+    border-bottom: 1px solid var(--bs-border-color);
+    padding-bottom: 24px;
+  }
+  .footer-col:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .footer-copyright-inner {
+    justify-content: center;
+    text-align: center;
+  }
+  .footer-social-icons {
+    order: -1;
+    justify-content: center;
+    width: 100%;
+  }
+  .footer-copyright-text {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+}
 
 /* Footer social icons */
 .social-icon {
@@ -744,6 +839,12 @@ header.navbar {
   border-bottom: 1px solid var(--bs-border-color);
   padding-top: 100px;
   padding-bottom: 100px;
+}
+@media (max-width: 767.98px) {
+  .cta-band-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* Anchor targets offset below the sticky header */

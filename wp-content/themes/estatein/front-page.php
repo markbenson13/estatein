@@ -60,7 +60,7 @@ $feature_items = array(
 				<h1><?php echo esc_html(get_theme_mod('estatein_hero_title', 'Discover Your Dream Property with Estatein')); ?></h1>
 				<p class="lead text-body-secondary"><?php echo esc_html(get_theme_mod('estatein_hero_subtitle', 'Your journey to finding the perfect property begins here. Explore our listings to find the home that matches your dreams.')); ?></p>
 
-				<div class="d-flex gap-3">
+				<div class="d-flex gap-3 hero-cta">
 					<a href="<?php echo esc_url(home_url('/about/')); ?>" class="btn btn-outline-light"><?php esc_html_e('Learn More', 'estatein'); ?></a>
 					<a href="<?php echo esc_url(get_post_type_archive_link('property')); ?>" class="btn btn-primary"><?php esc_html_e('Browse Properties', 'estatein'); ?></a>
 				</div>
@@ -124,7 +124,7 @@ if ($featured_query->have_posts()) :
 					<h2 class="mb-2"><?php esc_html_e('Featured Properties', 'estatein'); ?></h2>
 					<p class="text-body-secondary section-description mb-0"><?php esc_html_e('Explore our handpicked selection of featured properties. Each listing offers a glimpse into exceptional homes and investments available through Estatein.  Click "View Details" for more information.', 'estatein'); ?></p>
 				</div>
-				<a href="<?php echo esc_url(get_post_type_archive_link('property')); ?>" class="btn btn-outline-light flex-shrink-0"><?php esc_html_e('View All Properties', 'estatein'); ?></a>
+				<a href="<?php echo esc_url(get_post_type_archive_link('property')); ?>" class="btn btn-outline-light flex-shrink-0 d-none d-lg-inline-block"><?php esc_html_e('View All Properties', 'estatein'); ?></a>
 			</div>
 			<div class="es-slider" data-es-slider>
 				<div class="es-slider-track" data-es-slider-track>
@@ -138,7 +138,16 @@ if ($featured_query->have_posts()) :
 					wp_reset_postdata();
 					?>
 				</div>
-				<?php estatein_slider_nav($featured_query->post_count); ?>
+				<?php
+				estatein_slider_nav(
+					$featured_query->post_count,
+					array(
+						'url'   => get_post_type_archive_link( 'property' ),
+						'label' => __( 'View All Properties', 'estatein' ),
+						'class' => 'd-lg-none',
+					)
+				);
+				?>
 			</div>
 		</div>
 	</section>
@@ -147,46 +156,33 @@ endif;
 ?>
 
 <?php
-$testimonials = array(
+$testimonials_query = new WP_Query(
 	array(
-		'title'     => __('Exceptional Service!', 'estatein'),
-		'quote'     => __('Our experience with Estatein was outstanding. Their team\'s dedication and professionalism made finding our dream home a breeze. Highly recommended!', 'estatein'),
-		'name'      => 'Wade Warren',
-		'location'  => 'USA, California',
-		'initials'  => 'WW',
-		'avatar'    => '',
-	),
-	array(
-		'title'     => __('Efficient and Reliable', 'estatein'),
-		'quote'     => __('Estatein provided us with top-notch service. They helped us sell our property quickly and at a great price. We couldn\'t be happier with the results.', 'estatein'),
-		'name'      => 'Emelie Thomson',
-		'location'  => 'USA, Florida',
-		'initials'  => 'ET',
-		'avatar'    => '',
-	),
-	array(
-		'title'     => __('Trusted Advisors', 'estatein'),
-		'quote'     => __('The Estatein team guided us through the entire buying process. Their knowledge and commitment to our needs were impressive. Thank you for your support!', 'estatein'),
-		'name'      => 'John Mans',
-		'location'  => 'USA, Nevada',
-		'initials'  => 'JM',
-		'avatar'    => '',
-	),
+		'post_type'      => 'testimonial',
+		'posts_per_page' => 6,
+		'orderby'        => 'menu_order date',
+		'order'          => 'ASC',
+	)
 );
 ?>
+<?php if ( $testimonials_query->have_posts() ) : ?>
 <section class="section" id="testimonials">
 	<div class="container">
-		<div class="d-flex justify-content-between align-items-end flex-wrap gap-3 testimonials-header">
+		<div class="testimonials-header">
 			<div style="max-width:1135px;">
 				<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" />
 				<h2 class="mb-2"><?php esc_html_e('What Our Clients Say', 'estatein'); ?></h2>
 				<p class="text-body-secondary section-description mb-0"><?php esc_html_e('Read the success stories and heartfelt testimonials from our valued clients. Discover why they chose Estatein for their real estate needs.', 'estatein'); ?></p>
 			</div>
-			<a href="<?php echo esc_url(home_url('/testimonials/')); ?>" class="btn btn-outline-light flex-shrink-0"><?php esc_html_e('View All Testimonials', 'estatein'); ?></a>
 		</div>
 		<div class="es-slider testimonials-slider" data-es-slider>
 			<div class="es-slider-track" data-es-slider-track>
-				<?php foreach ($testimonials as $testimonial) : ?>
+				<?php
+				while ( $testimonials_query->have_posts() ) :
+					$testimonials_query->the_post();
+					$testimonial_name     = get_post_meta( get_the_ID(), '_testimonial_name', true );
+					$testimonial_location = get_post_meta( get_the_ID(), '_testimonial_location', true );
+					?>
 					<div class="es-slider-slide es-slider-slide--3up-direct">
 						<div class="card testimonial-card h-100">
 							<div class="testimonial-stars d-flex gap-2">
@@ -194,82 +190,91 @@ $testimonials = array(
 									<img class="testimonial-star" src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/star-icon.png'); ?>" alt="" />
 								<?php endfor; ?>
 							</div>
-							<h3 class="testimonial-title"><?php echo esc_html($testimonial['title']); ?></h3>
-							<p class="testimonial-quote"><?php echo esc_html($testimonial['quote']); ?></p>
+							<h3 class="testimonial-title"><?php the_title(); ?></h3>
+							<p class="testimonial-quote"><?php echo esc_html( wp_strip_all_tags( get_the_content() ) ); ?></p>
 							<div class="testimonial-author d-flex align-items-center gap-3">
-								<?php if ( ! empty( $testimonial['avatar'] ) ) : ?>
-									<img class="testimonial-avatar-img" src="<?php echo esc_url( $testimonial['avatar'] ); ?>" alt="" />
+								<?php if ( has_post_thumbnail() ) : ?>
+									<?php the_post_thumbnail( 'thumbnail', array( 'class' => 'testimonial-avatar-img' ) ); ?>
 								<?php else : ?>
-									<span class="testimonial-avatar" aria-hidden="true"><?php echo esc_html($testimonial['initials']); ?></span>
+									<span class="testimonial-avatar" aria-hidden="true"><?php echo esc_html( estatein_initials_from_name( $testimonial_name ) ); ?></span>
 								<?php endif; ?>
 								<div>
-									<div class="testimonial-name"><?php echo esc_html($testimonial['name']); ?></div>
-									<div class="testimonial-location"><?php echo esc_html($testimonial['location']); ?></div>
+									<div class="testimonial-name"><?php echo esc_html( $testimonial_name ); ?></div>
+									<div class="testimonial-location"><?php echo esc_html( $testimonial_location ); ?></div>
 								</div>
 							</div>
 						</div>
 					</div>
-				<?php endforeach; ?>
+				<?php
+				endwhile;
+				wp_reset_postdata();
+				?>
 			</div>
-			<?php estatein_slider_nav(count($testimonials)); ?>
+			<?php
+			estatein_slider_nav(
+				$testimonials_query->post_count,
+				array(
+					'url'   => get_post_type_archive_link( 'testimonial' ),
+					'label' => __( 'View All Testimonials', 'estatein' ),
+				)
+			);
+			?>
 		</div>
 	</div>
 </section>
+<?php endif; ?>
 
 <?php
-$faqs = array(
+$faq_query = new WP_Query(
 	array(
-		'question' => __('How do I search for properties on Estatein?', 'estatein'),
-		'answer'   => __('Learn how to use our user-friendly search tools to find properties that match your criteria.', 'estatein'),
-	),
-	array(
-		'question' => __('What documents do I need to sell my property through Estatein?', 'estatein'),
-		'answer'   => __('Find out about the necessary documentation for listing your property with us.', 'estatein'),
-	),
-	array(
-		'question' => __('How can I contact an Estatein agent?', 'estatein'),
-		'answer'   => __('Discover the different ways you can get in touch with our experienced agents.', 'estatein'),
-	),
+		'post_type'      => 'faq',
+		'posts_per_page' => 6,
+		'orderby'        => 'menu_order date',
+		'order'          => 'ASC',
+	)
 );
 ?>
+<?php if ( $faq_query->have_posts() ) : ?>
 <section class="section" id="faq">
 	<div class="container">
-		<div class="d-flex justify-content-between align-items-end flex-wrap gap-3 faq-header">
+		<div class="faq-header">
 			<div style="max-width:1135px;">
 				<img src="<?php echo esc_url(ESTATEIN_URI . '/assets/images/faq-abstract.png'); ?>" alt="" class="mb-3" />
 				<h2 class="mb-2"><?php esc_html_e('Frequently Asked Questions', 'estatein'); ?></h2>
 				<p class="text-body-secondary section-description mb-0"><?php esc_html_e("Find answers to common questions about Estatein's services, property listings, and the real estate process. We're here to provide clarity and assist you every step of the way.", 'estatein'); ?></p>
 			</div>
-			<a href="<?php echo esc_url(home_url('/faq/')); ?>" class="btn btn-outline-light flex-shrink-0"><?php esc_html_e("View All FAQ's", 'estatein'); ?></a>
 		</div>
 		<div class="es-slider faq-slider" data-es-slider>
 			<div class="es-slider-track" data-es-slider-track>
-				<?php foreach ($faqs as $faq) : ?>
+				<?php
+				while ( $faq_query->have_posts() ) :
+					$faq_query->the_post();
+					?>
 					<div class="es-slider-slide es-slider-slide--3up-direct">
 						<div class="faq-card d-flex flex-column h-100">
-							<h3 class="faq-question"><?php echo esc_html($faq['question']); ?></h3>
-							<p class="faq-answer flex-grow-1"><?php echo esc_html($faq['answer']); ?></p>
-							<a href="<?php echo esc_url(home_url('/faq/')); ?>" class="btn btn-outline-light align-self-start"><?php esc_html_e('Read More', 'estatein'); ?></a>
+							<h3 class="faq-question"><?php the_title(); ?></h3>
+							<p class="faq-answer flex-grow-1"><?php echo esc_html( wp_trim_words( get_the_content(), 20 ) ); ?></p>
+							<a href="<?php the_permalink(); ?>" class="btn btn-outline-light"><?php esc_html_e('Read More', 'estatein'); ?></a>
 						</div>
 					</div>
-				<?php endforeach; ?>
+				<?php
+				endwhile;
+				wp_reset_postdata();
+				?>
 			</div>
-			<?php estatein_slider_nav(count($faqs)); ?>
+			<?php
+			estatein_slider_nav(
+				$faq_query->post_count,
+				array(
+					'url'   => get_post_type_archive_link( 'faq' ),
+					'label' => __( "View All FAQ's", 'estatein' ),
+				)
+			);
+			?>
 		</div>
 	</div>
 </section>
-
-<section class="cta-band py-10">
-	<div class="container">
-		<div class="d-flex justify-content-between align-items-center flex-wrap gap-4">
-			<div style="max-width:1140px;">
-				<h2 class="mb-3"><?php esc_html_e('Start Your Real Estate Journey Today', 'estatein'); ?></h2>
-				<p class="text-body-secondary section-description mb-0"><?php esc_html_e('Your dream property is just a click away. Whether you\'re looking for a new home, a strategic investment, or expert real estate advice, Estatein is here to assist you every step of the way. Take the first step towards your real estate goals and explore our available properties or get in touch with our team for personalized assistance.', 'estatein'); ?></p>
-			</div>
-			<a href="<?php echo esc_url(get_post_type_archive_link('property')); ?>" class="btn btn-primary flex-shrink-0"><?php esc_html_e('Explore Properties', 'estatein'); ?></a>
-		</div>
-	</div>
-</section>
+<?php endif; ?>
 
 <?php
 get_footer();

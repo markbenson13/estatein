@@ -63,6 +63,19 @@ function estatein_area_unit_label( $unit ) {
 }
 
 /**
+ * Up to two uppercase initials from a person's name, used as the testimonial
+ * avatar fallback when no featured image is set.
+ */
+function estatein_initials_from_name( $name ) {
+	$words    = preg_split( '/\s+/', trim( (string) $name ) );
+	$initials = '';
+	foreach ( array_slice( $words, 0, 2 ) as $word ) {
+		$initials .= mb_strtoupper( mb_substr( $word, 0, 1 ) );
+	}
+	return $initials;
+}
+
+/**
  * First property_status term for a listing, or null.
  */
 function estatein_get_status_term( $post_id ) {
@@ -148,24 +161,52 @@ function estatein_render_property_filters() {
 
 /**
  * Counter + prev/next controls for an .es-slider section (see assets/js/main.js).
+ *
+ * @param int        $total    Total number of slides.
+ * @param array|null $view_all Optional array( 'url' => ..., 'label' => ..., 'class' => ... ) to
+ *                              render a "View All" button on the same row as the pagination.
+ *                              'class' lets a caller add responsive visibility utilities
+ *                              (e.g. 'd-lg-none') when the button already exists elsewhere.
  */
-function estatein_slider_nav( $total ) {
+function estatein_slider_nav( $total, $view_all = null ) {
 	?>
 	<div class="es-slider-nav">
-		<span class="es-slider-counter">
-			<span data-es-slider-current>01</span>
-			<span class="es-slider-counter-sep"><?php esc_html_e( 'of', 'estatein' ); ?></span>
-			<span data-es-slider-total><?php echo esc_html( sprintf( '%02d', $total ) ); ?></span>
-		</span>
-		<div class="es-slider-arrows">
+		<?php if ( $view_all ) : ?>
+			<a href="<?php echo esc_url( $view_all['url'] ); ?>" class="btn btn-outline-light flex-shrink-0<?php echo isset( $view_all['class'] ) ? ' ' . esc_attr( $view_all['class'] ) : ''; ?>"><?php echo esc_html( $view_all['label'] ); ?></a>
+		<?php endif; ?>
+		<div class="es-slider-pagination">
 			<button type="button" class="es-slider-arrow" data-es-slider-prev aria-label="<?php esc_attr_e( 'Previous', 'estatein' ); ?>">
 				<img class="slider-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/slider-arrow.png' ); ?>" alt="" />
 			</button>
+			<span class="es-slider-counter">
+				<span data-es-slider-current>01</span>
+				<span class="es-slider-counter-sep"><?php esc_html_e( 'of', 'estatein' ); ?></span>
+				<span data-es-slider-total><?php echo esc_html( sprintf( '%02d', $total ) ); ?></span>
+			</span>
 			<button type="button" class="es-slider-arrow" data-es-slider-next aria-label="<?php esc_attr_e( 'Next', 'estatein' ); ?>">
 				<img class="slider-active-icon" src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/slider-active-icon.png' ); ?>" alt="" />
 			</button>
 		</div>
 	</div>
+	<?php
+}
+
+/**
+ * "Start Your Real Estate Journey Today" band, shown at the bottom of every page.
+ */
+function estatein_cta_band() {
+	?>
+	<section class="cta-band py-10">
+		<div class="container">
+			<div class="d-flex justify-content-between align-items-center flex-wrap gap-4">
+				<div style="max-width:1140px;">
+					<h2 class="mb-3"><?php esc_html_e( 'Start Your Real Estate Journey Today', 'estatein' ); ?></h2>
+					<p class="text-body-secondary section-description mb-0"><?php esc_html_e( 'Your dream property is just a click away. Whether you\'re looking for a new home, a strategic investment, or expert real estate advice, Estatein is here to assist you every step of the way. Take the first step towards your real estate goals and explore our available properties or get in touch with our team for personalized assistance.', 'estatein' ); ?></p>
+				</div>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'property' ) ); ?>" class="btn btn-primary flex-shrink-0 cta-band-btn"><?php esc_html_e( 'Explore Properties', 'estatein' ); ?></a>
+			</div>
+		</div>
+	</section>
 	<?php
 }
 

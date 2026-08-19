@@ -32,15 +32,17 @@ if ( get_theme_mod( 'estatein_show_announcement', true ) && $estatein_announceme
 
 <header class="navbar navbar-expand-lg sticky-top py-3">
 	<div class="container">
-		<a class="navbar-brand py-0" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<?php if ( has_custom_logo() ) : ?>
+		<?php if ( has_custom_logo() ) : ?>
+			<div class="navbar-brand py-0">
 				<?php the_custom_logo(); ?>
-			<?php else : ?>
+			</div>
+		<?php else : ?>
+			<a class="navbar-brand py-0" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<img src="<?php echo esc_url( ESTATEIN_URI . '/assets/images/estatein-logo.png' ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="site-logo-img" />
-			<?php endif; ?>
-		</a>
+			</a>
+		<?php endif; ?>
 
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNav" aria-controls="primaryNav" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'estatein' ); ?>">
+		<button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNav" aria-controls="primaryNav" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'estatein' ); ?>">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 

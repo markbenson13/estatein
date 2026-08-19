@@ -25,6 +25,7 @@ function estatein_register_property_cpt() {
 				'all_items'          => __( 'All Properties', 'estatein' ),
 				'menu_name'          => __( 'Properties', 'estatein' ),
 			),
+			'description'        => __( 'Browse available homes, condos, and commercial spaces listed with Estatein.', 'estatein' ),
 			'public'             => true,
 			'has_archive'        => true,
 			'show_in_rest'       => true,
@@ -90,6 +91,12 @@ add_action( 'init', 'estatein_register_property_cpt' );
  */
 function estatein_flush_rewrites() {
 	estatein_register_property_cpt();
+	if ( function_exists( 'estatein_register_testimonial_cpt' ) ) {
+		estatein_register_testimonial_cpt();
+	}
+	if ( function_exists( 'estatein_register_faq_cpt' ) ) {
+		estatein_register_faq_cpt();
+	}
 	flush_rewrite_rules();
 }
 add_action( 'after_switch_theme', 'estatein_flush_rewrites' );

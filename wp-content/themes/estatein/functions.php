@@ -12,10 +12,13 @@ define( 'ESTATEIN_DIR', get_template_directory() );
 define( 'ESTATEIN_URI', get_template_directory_uri() );
 
 require ESTATEIN_DIR . '/inc/cpt-property.php';
+require ESTATEIN_DIR . '/inc/cpt-testimonial.php';
+require ESTATEIN_DIR . '/inc/cpt-faq.php';
 require ESTATEIN_DIR . '/inc/meta-boxes.php';
 require ESTATEIN_DIR . '/inc/customizer.php';
 require ESTATEIN_DIR . '/inc/template-tags.php';
 require ESTATEIN_DIR . '/inc/forms.php';
+require ESTATEIN_DIR . '/inc/seo.php';
 
 /**
  * Theme setup.
